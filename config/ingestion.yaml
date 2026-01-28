@@ -1,0 +1,58 @@
+app:
+  name: air_quality_ingestion
+  environment: dev
+  log_level: INFO
+
+data_source:
+  type: file
+  format: csv
+  path: data/Air_Quality.csv
+  delimiter: ","
+  encoding: utf-8
+  has_header: true
+
+schema_mapping:
+  unique_id: unique_id
+  indicator_id: indicator_id
+  name: name
+  measure: measure
+  measure_info: measure_info
+  geo_type_name: geo_type_name
+  geo_join_id: geo_join_id
+  geo_place_name: geo_place_name
+  time_period: time_period
+  start_date: start_date
+  data_value: data_value
+  message: message
+
+validation:
+  required_fields:
+    - unique_id
+    - indicator_id
+    - name
+    - geo_type_name
+    - geo_place_name
+    - start_date
+
+  numeric_fields:
+    - data_value
+
+  date_fields:
+    - start_date
+
+deduplication:
+  enabled: true
+  keys:
+    - unique_id
+    - indicator_id
+    - start_date
+    - geo_place_name
+
+database:
+  target_table: stg_air_quality_ny
+  reject_table: stg_rejects
+  batch_size: 500
+
+audit:
+  track_source_file: true
+  track_load_timestamp: true

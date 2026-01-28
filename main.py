@@ -58,7 +58,7 @@ def main() -> None:
     src_path = cfg["data_source"]["path"]
     raw_records = read_csv(src_path)
 
-    # TEST: force one reject (set to True only when testing)
+    # TEST: force one reject 
     force_reject = False
     if force_reject and raw_records:
         forced_bad = dict(raw_records[0])  
@@ -95,7 +95,7 @@ def main() -> None:
 
     logging.info(f"Records after deduplication: {len(deduped_records)}")
 
-    # 5) Load to database (source file inferred from path)
+    # 5) Load to database 
     source_file = os.path.basename(src_path)
 
     load_records(

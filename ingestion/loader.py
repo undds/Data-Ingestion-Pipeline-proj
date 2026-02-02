@@ -3,10 +3,10 @@ import json
 from typing import List, Dict, Any
 
 from psycopg2.extras import execute_batch
-from db.connection import get_db_connection
+from db.connection import connect_to_db
 
 
-#columns for stg_air_quality_ny
+# columns for stg_air_quality_ny
 AIR_QUALITY_COLUMNS = [
     "unique_id",
     "indicator_id",
@@ -83,7 +83,7 @@ INSERT INTO {reject_table} (
 ) VALUES (%s, %s, %s);
 """.strip()
 
-    conn = get_db_connection()
+    conn = connect_to_db()
     cur = conn.cursor()
 
     try:

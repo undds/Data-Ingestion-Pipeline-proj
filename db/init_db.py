@@ -1,10 +1,10 @@
 import logging
-from db.connection import get_db_connection
+from db.connection import connect_to_db
 from db.schema import CREATE_STG_AIR_QUALITY_NY, CREATE_STG_REJECTS
 
-
 def init_db():
-    conn = get_db_connection()
+
+    conn = connect_to_db()
     cur = conn.cursor()
 
     try:

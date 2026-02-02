@@ -1,0 +1,1 @@
+ssh -i "ssh.pem" -L 5433:database-test1.co5okk6ow6qt.us-east-1.rds.amazonaws.com:5432 ec2-user@23.21.11.130

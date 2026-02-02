@@ -1,18 +1,22 @@
-import os
 import psycopg2
+import boto3
+import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-def get_db_connection():
-    """
-    Create and return a PostgreSQL database connection.
-    """
-    return psycopg2.connect(
-        host=os.getenv("DB_HOST"),
-        port=os.getenv("DB_PORT"),
-        dbname=os.getenv("DB_NAME"),
-        user=os.getenv("DB_USER"),
-        password=os.getenv("DB_PASSWORD"),
-        sslmode="require"
-    )
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+
+def connect_to_db():
+    try:
+        conn = psycopg2.connect(
+            host="127.0.0.1",
+            port=5433,
+            database="postgres",
+            user="postgres",
+            password=DB_PASSWORD,
+        )
+        return conn
+    except Exception as e:
+        print(f"Database error: {e}")
+        raise

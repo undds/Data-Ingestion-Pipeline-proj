@@ -1,4 +1,3 @@
-import pytest
 
 from ingestion.validate import validate_records
 

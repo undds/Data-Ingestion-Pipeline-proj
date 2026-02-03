@@ -1,7 +1,28 @@
 import pytest
 
 from ingestion.deduplicator import deduplicate_records
+from ingestion.deduplicator import count_duplicates
 
+def test_count_duplicates_counts_correctly():
+    records = [
+        {"unique_id": 1, "indicator_id": 10, "geo_place_name": "NY", "start_date": "2020-01-01"},
+        {"unique_id": 1, "indicator_id": 10, "geo_place_name": "NY", "start_date": "2020-01-01"},  
+        {"unique_id": 2, "indicator_id": 10, "geo_place_name": "NY", "start_date": "2020-01-01"},
+        {"unique_id": 2, "indicator_id": 10, "geo_place_name": "NY", "start_date": "2020-01-01"},  
+    ]
+    keys = ["unique_id", "indicator_id", "geo_place_name", "start_date"]
+
+    assert count_duplicates(records, keys) == 2
+
+
+def test_count_duplicates_raises_keyerror_when_key_missing():
+    records = [
+        {"unique_id": 1, "indicator_id": 10, "start_date": "2020-01-01"} 
+    ]
+    keys = ["unique_id", "indicator_id", "geo_place_name", "start_date"]
+
+    with pytest.raises(KeyError):
+        count_duplicates(records, keys)
 
 def test_deduplicate_removes_exact_duplicates():
     records = [

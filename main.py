@@ -59,7 +59,7 @@ def main() -> None:
     raw_records = read_csv(src_path)
 
     # TEST: force one reject 
-    force_reject = False
+    force_reject = True
     if force_reject and raw_records:
         forced_bad = dict(raw_records[0])  
         forced_bad["name"] = None          

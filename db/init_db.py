@@ -1,6 +1,6 @@
 import logging
 from db.connection import connect_to_db
-from db.schema import CREATE_STG_AIR_QUALITY_NY, CREATE_STG_REJECTS
+from db.schema import CREATE_INGESTION_RUNS, CREATE_INGESTION_REJECTS, CREATE_MEASUREMENTS, CREATE_INDICATORS, CREATE_GEOGRAPHIC
 
 def init_db():
 
@@ -8,12 +8,21 @@ def init_db():
     cur = conn.cursor()
 
     try:
-        cur.execute("DROP TABLE IF EXISTS stg_air_quality_ny;")
-        cur.execute("DROP TABLE IF EXISTS stg_rejects;")
+        # hmm why drop? i think this means that we want to replace every data with new data. but what if we want to append new data to old data?
+
+        cur.execute("DROP TABLE IF EXISTS ingestion_runs;")
+        cur.execute("DROP TABLE IF EXISTS ingestion_rejects;")
+        cur.execute("DROP TABLE IF EXISTS measurements;")
+        cur.execute("DROP TABLE IF EXISTS indicators;")
+        cur.execute("DROP TABLE IF EXISTS geographic;")
+        
 
         # Recreate tables
-        cur.execute(CREATE_STG_AIR_QUALITY_NY)
-        cur.execute(CREATE_STG_REJECTS)
+        cur.execute(CREATE_INGESTION_RUNS)
+        cur.execute(CREATE_INGESTION_REJECTS)
+        cur.execute(CREATE_MEASUREMENTS)
+        cur.execute(CREATE_INDICATORS)
+        cur.execute(CREATE_GEOGRAPHIC)
 
         conn.commit()
         logging.info("Database tables verified/created successfully")

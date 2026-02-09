@@ -24,3 +24,11 @@
 2026-02-02 09:09:26,888 - INFO - Rejected records: 0
 2026-02-02 09:09:26,908 - INFO - Records after deduplication: 18862
 2026-02-02 09:09:36,022 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-09 07:44:47,273 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 07:44:48,302 - INFO - Database tables verified/created successfully
+2026-02-09 07:44:48,390 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 07:44:48,390 - INFO - Records read: 18862
+2026-02-09 07:44:51,250 - INFO - Valid records: 18862
+2026-02-09 07:44:51,250 - INFO - Rejected records: 0
+2026-02-09 07:44:51,267 - INFO - Records after deduplication: 18862
+2026-02-09 07:44:59,963 - INFO - Air Quality Data Ingestion completed successfully

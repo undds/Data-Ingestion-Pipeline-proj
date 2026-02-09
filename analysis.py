@@ -28,7 +28,15 @@ def main() -> None:
 
     try:
         # TODO: Add analysis stuff here
-        cur.execute("SELECT * FROM stg_air_quality_ny;")
+        # two feature engineering examples
+        # one correlation
+        # three visualizations
+
+        # 
+        df = pd.read_sql("SELECT * FROM stg_air_quality_ny;", conn)
+        logging.info(f"Loaded DataFrame with shape {df.shape}")
+
+
 
     except Exception as e:
         conn.rollback()

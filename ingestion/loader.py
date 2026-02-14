@@ -1,31 +1,67 @@
-import math
 import json
-from typing import List, Dict, Any
+import math
+from typing import List, Dict, Any, Tuple
 
 from psycopg2.extras import execute_batch
 from db.connection import connect_to_db
 
 
-# columns for stg_air_quality_ny
-AIR_QUALITY_COLUMNS = [
-    "unique_id",
-    "indicator_id",
-    "name",
-    "measure",
-    "measure_info",
-    "geo_type_name",
-    "geo_join_id",
-    "geo_place_name",
-    "time_period",
-    "start_date",
-    "data_value",
-    "message",
-    "source_file",
-]
+# -----------------------
+# SQL (normalized schema)
+# -----------------------
 
+INSERT_INDICATORS = """
+INSERT INTO indicators (indicator_id, name, measure, measure_info)
+VALUES (%(indicator_id)s, %(name)s, %(measure)s, %(measure_info)s)
+ON CONFLICT (indicator_id) DO NOTHING;
+"""
+
+INSERT_GEOGRAPHIC = """
+INSERT INTO geographic (geo_join_id, geo_type_name, geo_place_name)
+VALUES (%(geo_join_id)s, %(geo_type_name)s, %(geo_place_name)s)
+ON CONFLICT (geo_join_id) DO NOTHING;
+"""
+
+# Return 1 only when an insert actually happens (duplicates return 0 rows)
+INSERT_MEASUREMENTS = """
+INSERT INTO measurements (
+    unique_id,
+    indicator_id,
+    geo_join_id,
+    time_period,
+    start_date,
+    data_value,
+    message,
+    run_id
+)
+VALUES (
+    %(unique_id)s,
+    %(indicator_id)s,
+    %(geo_join_id)s,
+    %(time_period)s,
+    %(start_date)s,
+    %(data_value)s,
+    %(message)s,
+    %(run_id)s
+)
+ON CONFLICT (unique_id) DO NOTHING
+RETURNING 1;
+"""
+
+
+INSERT_REJECT = """
+INSERT INTO ingestion_rejects (run_id, raw_record, error_reason, source_file)
+VALUES (%s, %s, %s, %s)
+RETURNING 1;
+"""
+
+
+# -----------------------
+# Helpers
+# -----------------------
 
 def sanitize_for_json(value: Any) -> Any:
-    """Convert NaN values to None for JSON compatibility."""
+    """Convert NaN to None so json.dumps(allow_nan=False) won't crash."""
     if isinstance(value, float) and math.isnan(value):
         return None
     if isinstance(value, dict):
@@ -35,86 +71,112 @@ def sanitize_for_json(value: Any) -> Any:
     return value
 
 
-def normalize_record(record: Dict, source_file: str) -> Dict:
-    """
-    Map incoming records to DB schema safely.
-    Uses .get() to avoid KeyError and ensures expected keys exist.
-    """
-    mapped = {col: record.get(col) for col in AIR_QUALITY_COLUMNS if col != "source_file"}
-    mapped["source_file"] = source_file
-    return mapped
+def map_indicator(record: Dict) -> Dict:
+    return {
+        "indicator_id": record.get("indicator_id"),
+        "name": record.get("name"),
+        "measure": record.get("measure"),
+        "measure_info": record.get("measure_info"),
+    }
 
 
-def build_insert_sql(table_name: str, columns: List[str]) -> str:
-    cols = ",\n    ".join(columns)
-    vals = ",\n    ".join([f"%({c})s" for c in columns])
+def map_geographic(record: Dict) -> Dict:
+    return {
+        "geo_join_id": record.get("geo_join_id"),
+        "geo_type_name": record.get("geo_type_name"),
+        "geo_place_name": record.get("geo_place_name"),
+    }
 
-    return f"""
-INSERT INTO {table_name} (
-    {cols}
-) VALUES (
-    {vals}
-);
-""".strip()
 
+def map_measurement(record: Dict, run_id: int) -> Dict:
+    return {
+        "unique_id": record.get("unique_id"),
+        "indicator_id": record.get("indicator_id"),
+        "geo_join_id": record.get("geo_join_id"),
+        "time_period": record.get("time_period"),
+        "start_date": record.get("start_date"),
+        "data_value": record.get("data_value"),
+        "message": record.get("message"),
+        "run_id": run_id,
+    }
+
+
+# -----------------------
+# Main loader
+# -----------------------
 
 def load_records(
     valid_records: List[Dict],
     rejected_records: List[Dict],
     source_file: str,
-    target_table: str,
-    reject_table: str,
+    run_id: int,
     batch_size: int = 500,
-) -> None:
+) -> Tuple[int, int]:
     """
-    Load valid and rejected records into PostgreSQL.
+    Load records into normalized tables.
 
-    - Valid records -> target_table
-    - Rejected records -> reject_table (raw_record + error_reason + source_file)
+    Returns:
+        (measurements_inserted, rejects_inserted)
     """
-
-    insert_valid_sql = build_insert_sql(target_table, AIR_QUALITY_COLUMNS)
-
-    insert_reject_sql = f"""
-INSERT INTO {reject_table} (
-    raw_record,
-    error_reason,
-    source_file
-) VALUES (%s, %s, %s);
-""".strip()
 
     conn = connect_to_db()
     cur = conn.cursor()
 
     try:
-        # -------- VALID RECORDS (BATCH INSERT) --------
-        mapped_records = [normalize_record(r, source_file) for r in valid_records]
+        # 1) Insert dimensions (dedupe in Python to reduce DB work)
+        indicators: dict[int, Dict] = {}
+        geos: dict[int, Dict] = {}
 
-        if mapped_records:
-            execute_batch(cur, insert_valid_sql, mapped_records, page_size=batch_size)
+        for r in valid_records:
+            ind = map_indicator(r)
+            if ind["indicator_id"] is not None:
+                indicators[int(ind["indicator_id"])] = ind
 
-        # -------- REJECTED RECORDS (BATCH INSERT) --------
+            geo = map_geographic(r)
+            if geo["geo_join_id"] is not None:
+                geos[int(geo["geo_join_id"])] = geo
+
+        if indicators:
+            execute_batch(cur, INSERT_INDICATORS, list(indicators.values()), page_size=batch_size)
+
+        if geos:
+            execute_batch(cur, INSERT_GEOGRAPHIC, list(geos.values()), page_size=batch_size)
+
+        # 2) Insert measurements (count real inserts via RETURNING)
+        measurements = [map_measurement(r, run_id) for r in valid_records]
+
+        measurements_inserted = 0
+        if measurements:
+            execute_batch(cur, INSERT_MEASUREMENTS, measurements, page_size=batch_size)
+            # RETURNING rows are in the cursor now; duplicates return nothing
+            returned = cur.fetchall()
+            measurements_inserted = len(returned)
+
+        # 3) Insert rejects with reasons (count via RETURNING)
         reject_rows = []
         for r in rejected_records:
             sanitized = sanitize_for_json(r)
-            error_reason = sanitized.get("error_reason", "Validation failed")
+            reason = sanitized.get("error_reason", "Validation failed")
             reject_rows.append(
                 (
+                    run_id,
                     json.dumps(sanitized, allow_nan=False),
-                    error_reason,
+                    reason,
                     source_file,
                 )
             )
 
+        rejects_inserted = 0
         if reject_rows:
-            execute_batch(cur, insert_reject_sql, reject_rows, page_size=batch_size)
+            execute_batch(cur, INSERT_REJECT, reject_rows, page_size=batch_size)
+            rejects_inserted = len(cur.fetchall())
 
         conn.commit()
+        return (measurements_inserted, rejects_inserted)
 
     except Exception:
         conn.rollback()
         raise
-
     finally:
         cur.close()
         conn.close()

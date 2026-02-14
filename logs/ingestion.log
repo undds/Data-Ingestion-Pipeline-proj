@@ -24,3 +24,138 @@
 2026-02-02 09:09:26,888 - INFO - Rejected records: 0
 2026-02-02 09:09:26,908 - INFO - Records after deduplication: 18862
 2026-02-02 09:09:36,022 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-09 09:53:15,837 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 09:53:16,383 - INFO - Database tables verified/created successfully
+2026-02-09 09:53:16,524 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 09:53:16,525 - INFO - Records read: 18863
+2026-02-09 09:53:22,343 - INFO - Valid records: 18862
+2026-02-09 09:53:22,343 - INFO - Rejected records: 1
+2026-02-09 09:53:22,343 - WARNING - Reject summary: 1 rejected total
+2026-02-09 09:53:22,343 - WARNING - Reject reason (1): Missing required field: name
+2026-02-09 09:53:22,343 - WARNING - Reject sample 1: reason=Missing required field: name unique_id=336867 indicator_id=375 geo_place_name=Flushing and Whitestone (CD7) start_date=12/01/2014
+2026-02-09 09:53:22,357 - INFO - Records after deduplication: 18862
+2026-02-09 09:53:26,523 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-09 10:11:42,134 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 10:11:42,732 - INFO - Database tables verified/created successfully
+2026-02-09 10:11:42,870 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 10:11:42,871 - INFO - Records read: 18862
+2026-02-09 10:11:48,499 - INFO - Valid records: 18862
+2026-02-09 10:11:48,499 - INFO - Rejected records: 0
+2026-02-09 10:11:48,512 - INFO - Records after deduplication: 18862
+2026-02-09 10:11:55,988 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-09 10:12:32,564 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 10:12:33,068 - INFO - Database tables verified/created successfully
+2026-02-09 10:12:33,224 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 10:12:33,225 - INFO - Records read: 18862
+2026-02-09 10:12:38,801 - INFO - Valid records: 18862
+2026-02-09 10:12:38,801 - INFO - Rejected records: 0
+2026-02-09 10:12:38,814 - INFO - Records after deduplication: 18862
+2026-02-09 10:12:46,452 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-09 10:19:46,689 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 10:19:47,310 - INFO - Database tables verified/created successfully
+2026-02-09 10:19:47,448 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 10:19:47,449 - INFO - Records read: 18862
+2026-02-09 10:19:53,079 - INFO - Valid records: 18862
+2026-02-09 10:19:53,079 - INFO - Rejected records: 0
+2026-02-09 10:19:53,092 - INFO - Records after deduplication: 18862
+2026-02-09 10:19:58,050 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-09 10:23:16,991 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 10:23:17,552 - INFO - Database tables verified/created successfully
+2026-02-09 10:23:17,690 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 10:23:17,691 - INFO - Records read: 18862
+2026-02-09 10:23:23,340 - INFO - Valid records: 18862
+2026-02-09 10:23:23,340 - INFO - Rejected records: 0
+2026-02-09 10:23:23,355 - INFO - Records after deduplication: 18862
+2026-02-09 10:26:41,306 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 10:26:41,972 - INFO - Database tables verified/created successfully
+2026-02-09 10:26:42,122 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 10:26:42,123 - INFO - Records read: 18862
+2026-02-09 10:26:47,839 - INFO - Valid records: 18862
+2026-02-09 10:26:47,839 - INFO - Rejected records: 0
+2026-02-09 10:26:47,852 - INFO - Records after deduplication: 18862
+2026-02-09 10:36:22,524 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 10:36:22,926 - INFO - Database tables dropped and recreated successfully
+2026-02-09 10:36:23,063 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 10:36:23,063 - INFO - Records read: 18862
+2026-02-09 10:36:28,679 - INFO - Valid records: 18862
+2026-02-09 10:36:28,680 - INFO - Rejected records: 0
+2026-02-09 10:36:28,693 - INFO - Records after deduplication: 18862
+2026-02-09 10:36:34,361 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-09 10:44:59,489 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 10:44:59,872 - INFO - Database tables dropped and recreated successfully
+2026-02-09 10:45:00,009 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 10:45:00,009 - INFO - Records read: 18863
+2026-02-09 10:45:05,618 - INFO - Valid records: 18862
+2026-02-09 10:45:05,618 - INFO - Rejected records: 1
+2026-02-09 10:45:05,618 - WARNING - Reject summary: 1 rejected total
+2026-02-09 10:45:05,618 - WARNING - Reject reason (1): Missing required field: name
+2026-02-09 10:45:05,618 - WARNING - Reject sample 1: reason=Missing required field: name unique_id=336867 indicator_id=375 geo_place_name=Flushing and Whitestone (CD7) start_date=12/01/2014
+2026-02-09 10:45:05,631 - INFO - Records after deduplication: 18862
+2026-02-09 10:45:11,457 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-09 11:06:21,578 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 11:06:21,946 - INFO - Database tables dropped and recreated successfully
+2026-02-09 11:06:22,089 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 11:06:22,089 - INFO - Records read: 18862
+2026-02-09 11:06:27,674 - INFO - Valid records: 18862
+2026-02-09 11:06:27,675 - INFO - Rejected records: 0
+2026-02-09 11:06:27,687 - INFO - Records after deduplication: 18862
+2026-02-09 11:06:32,050 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-09 11:21:01,321 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 11:21:01,751 - INFO - Database tables dropped and recreated successfully
+2026-02-09 11:21:01,898 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 11:21:01,899 - INFO - Records read: 18862
+2026-02-09 11:21:07,738 - INFO - Valid records: 18862
+2026-02-09 11:21:07,738 - INFO - Rejected records: 0
+2026-02-09 11:21:07,751 - INFO - Records after deduplication: 18862
+2026-02-09 11:21:12,085 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-09 11:21:31,296 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 11:21:31,646 - INFO - Database tables dropped and recreated successfully
+2026-02-09 11:21:31,788 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 11:21:31,789 - INFO - Records read: 18863
+2026-02-09 11:21:37,540 - INFO - Valid records: 18862
+2026-02-09 11:21:37,541 - INFO - Rejected records: 1
+2026-02-09 11:21:37,541 - WARNING - Reject summary: 1 rejected total
+2026-02-09 11:21:37,541 - WARNING - Reject reason (1): Missing required field: name
+2026-02-09 11:21:37,541 - WARNING - Reject sample 1: reason=Missing required field: name unique_id=336867 indicator_id=375 geo_place_name=Flushing and Whitestone (CD7) start_date=12/01/2014
+2026-02-09 11:21:37,556 - INFO - Records after deduplication: 18862
+2026-02-09 11:21:43,033 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-09 13:46:52,460 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 13:47:37,151 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 13:47:37,792 - INFO - Database tables verified/created successfully
+2026-02-09 13:47:37,936 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 13:47:37,937 - INFO - Records read: 18863
+2026-02-09 13:47:43,649 - INFO - Valid records: 18862
+2026-02-09 13:47:43,649 - INFO - Rejected records: 1
+2026-02-09 13:47:43,650 - WARNING - Reject summary: 1 rejected total
+2026-02-09 13:47:43,650 - WARNING - Reject reason (1): Missing required field: name
+2026-02-09 13:47:43,650 - WARNING - Reject sample 1: reason=Missing required field: name unique_id=336867 indicator_id=375 geo_place_name=Flushing and Whitestone (CD7) start_date=12/01/2014
+2026-02-09 13:47:43,665 - INFO - Records after deduplication: 18862
+2026-02-09 13:47:48,349 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-09 13:48:09,403 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 13:48:09,902 - INFO - Database tables verified/created successfully
+2026-02-09 13:48:10,050 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 13:48:10,050 - INFO - Records read: 18862
+2026-02-09 13:48:15,625 - INFO - Valid records: 18862
+2026-02-09 13:48:15,625 - INFO - Rejected records: 0
+2026-02-09 13:48:15,638 - INFO - Records after deduplication: 18862
+2026-02-09 13:48:19,928 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-13 00:51:39,461 - INFO - Starting Air Quality Data Ingestion
+2026-02-13 01:02:56,929 - INFO - Starting Air Quality Data Ingestion
+2026-02-13 01:03:43,910 - INFO - Starting Air Quality Data Ingestion
+2026-02-13 01:03:44,400 - INFO - Database tables verified/created successfully
+2026-02-13 01:03:44,789 - INFO - Run started: run_id=1
+2026-02-13 01:03:44,932 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-13 01:03:44,933 - INFO - Records read: 18862
+2026-02-13 01:03:50,478 - INFO - Valid records: 18862
+2026-02-13 01:03:50,478 - INFO - Rejected records: 0
+2026-02-13 01:03:50,491 - INFO - Records after deduplication: 18862
+2026-02-13 01:03:55,147 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-13 09:52:10,958 - INFO - Starting Air Quality Data Ingestion
+2026-02-13 09:52:11,295 - INFO - Database tables verified/created successfully
+2026-02-13 09:52:11,560 - INFO - Run started: run_id=2
+2026-02-13 09:52:11,724 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-13 09:52:11,725 - INFO - Records read: 18862
+2026-02-13 09:52:17,569 - INFO - Valid records: 18862
+2026-02-13 09:52:17,569 - INFO - Rejected records: 0
+2026-02-13 09:52:17,582 - INFO - Records after deduplication: 18862
+2026-02-13 09:52:20,849 - INFO - Air Quality Data Ingestion completed successfully

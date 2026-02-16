@@ -1,25 +1,55 @@
-import math
 import json
-from typing import List, Dict, Any
+import math
+from typing import List, Dict, Any, Tuple
+from datetime import datetime
 
 from psycopg2.extras import execute_batch
 from db.connection import connect_to_db
 
+# --- DATABASE COLUMN DEFINITIONS ---
 
-# columns for stg_air_quality_ny
-AIR_QUALITY_COLUMNS = [
-    "unique_id",
+# Columns to INSERT into
+# exclude autoincrements aka primary keys
+# TODO: we're not really sending a status code nor a potentinal error message, may need logic handling that
+INGESTION_RUNS_INSERT_COLS = [
+    "source_file",
+    "start_timestamp",
+    "end_timestamp",
+    "total_records",
+    "valid_records",
+    "rejected_records",
+]
+
+INGESTION_REJECTS_COLS = [
+    "run_id",
+    "raw_record",
+    "error_reason",
+    "source_file",
+]
+
+# Dimension: Indicators
+INDICATORS_COLS = [
     "indicator_id",
     "name",
     "measure",
     "measure_info",
-    "geo_type_name",
+]
+
+# Dimension: Geographic
+GEOGRAPHIC_COLS = [
     "geo_join_id",
+    "geo_type_name",
     "geo_place_name",
+]
+
+# Fact: Measurements
+MEASUREMENTS_COLS = [
+    "unique_id",
+    "indicator_id",
+    "geo_join_id",
     "time_period",
     "start_date",
     "data_value",
-    "message",
     "source_file",
 ]
 
@@ -35,84 +65,177 @@ def sanitize_for_json(value: Any) -> Any:
     return value
 
 
-def normalize_record(record: Dict, source_file: str) -> Dict:
+def build_insert_sql(
+    table_name: str, columns: List[str], conflict_target: str = None
+) -> str:
     """
-    Map incoming records to DB schema safely.
-    Uses .get() to avoid KeyError and ensures expected keys exist.
+    Builds a dynamic SQL insert statement.
+    If conflict_target is provided, adds 'ON CONFLICT DO NOTHING'.
     """
-    mapped = {col: record.get(col) for col in AIR_QUALITY_COLUMNS if col != "source_file"}
-    mapped["source_file"] = source_file
-    return mapped
+    cols = ", ".join(columns)
+    vals = ", ".join([f"%({c})s" for c in columns])
+
+    sql = f"INSERT INTO {table_name} ({cols}) VALUES ({vals})"
+
+    if conflict_target:
+        sql += f" ON CONFLICT ({conflict_target}) DO NOTHING"
+
+    return sql
 
 
-def build_insert_sql(table_name: str, columns: List[str]) -> str:
-    cols = ",\n    ".join(columns)
-    vals = ",\n    ".join([f"%({c})s" for c in columns])
+def extract_dimension_data(
+    records: List[Dict], key_map: Dict[str, str], unique_key: str
+) -> List[Dict]:
+    """
+    Extracts unique dimension data (e.g., unique Indicators) from the raw list of records.
+    key_map: maps DB column name -> CSV/Source key name
+    """
+    seen = set()
+    unique_rows = []
 
-    return f"""
-INSERT INTO {table_name} (
-    {cols}
-) VALUES (
-    {vals}
-);
-""".strip()
+    for r in records:
+        # Create a tuple of the ID to check for uniqueness
+        rec_id = r.get(key_map[unique_key])
+
+        if rec_id and rec_id not in seen:
+            seen.add(rec_id)
+            # Build the dictionary for this row based on the mapping
+            row = {}
+            for db_col, source_key in key_map.items():
+                row[db_col] = r.get(source_key)
+            unique_rows.append(row)
+
+    return unique_rows
 
 
 def load_records(
     valid_records: List[Dict],
     rejected_records: List[Dict],
     source_file: str,
-    target_table: str,
-    reject_table: str,
+    ingestion_runs_table: str = "ingestion_runs",
+    ingestion_reject_table: str = "ingestion_rejects",
+    measurements_table: str = "measurements",
+    indicators_table: str = "indicators",
+    geographic_table: str = "geographic",
     batch_size: int = 500,
 ) -> None:
-    """
-    Load valid and rejected records into PostgreSQL.
-
-    - Valid records -> target_table
-    - Rejected records -> reject_table (raw_record + error_reason + source_file)
-    """
-
-    insert_valid_sql = build_insert_sql(target_table, AIR_QUALITY_COLUMNS)
-
-    insert_reject_sql = f"""
-INSERT INTO {reject_table} (
-    raw_record,
-    error_reason,
-    source_file
-) VALUES (%s, %s, %s);
-""".strip()
 
     conn = connect_to_db()
     cur = conn.cursor()
 
     try:
-        # -------- VALID RECORDS (BATCH INSERT) --------
-        mapped_records = [normalize_record(r, source_file) for r in valid_records]
+        # 1. LOG THE RUN (Get run_id)
+        # ---------------------------------------------------------
+        run_insert_sql = f"""
+            INSERT INTO {ingestion_runs_table} 
+            ({', '.join(INGESTION_RUNS_INSERT_COLS)}) 
+            VALUES (%s, %s, %s, %s, %s, %s) 
+            RETURNING run_id;
+        """
+        time_before = datetime.now()
 
-        if mapped_records:
-            execute_batch(cur, insert_valid_sql, mapped_records, page_size=batch_size)
+        cur.execute(
+            run_insert_sql,
+            (
+                source_file,
+                time_before,  # start_timestamp
+                datetime.now(),  # end_timestamp
+                len(valid_records) + len(rejected_records),
+                len(valid_records),
+                len(rejected_records),
+            ),
+        )
+        run_id = cur.fetchone()[0]
+        print(f"Run ID generated: {run_id}")
 
-        # -------- REJECTED RECORDS (BATCH INSERT) --------
+        # 2. PREPARE & LOAD DIMENSIONS (Indicators)
+        # ---------------------------------------------------------
+        # Mapping: DB Column -> Source CSV Header
+        indicator_map = {
+            "indicator_id": "Indicator ID",
+            "name": "Name",
+            "measure": "Measure",
+            "measure_info": "Measure Info",
+        }
+        unique_indicators = extract_dimension_data(
+            valid_records, indicator_map, "indicator_id"
+        )
+
+        if unique_indicators:
+            sql = build_insert_sql(
+                indicators_table, INDICATORS_COLS, conflict_target="indicator_id"
+            )
+            execute_batch(cur, sql, unique_indicators, page_size=batch_size)
+
+        # 3. PREPARE & LOAD DIMENSIONS (Geographic)
+        # ---------------------------------------------------------
+        geo_map = {
+            "geo_join_id": "Geo Join ID",
+            "geo_type_name": "Geo Type Name",
+            "geo_place_name": "Geo Place Name",
+        }
+        unique_geo = extract_dimension_data(valid_records, geo_map, "geo_join_id")
+
+        if unique_geo:
+            sql = build_insert_sql(
+                geographic_table, GEOGRAPHIC_COLS, conflict_target="geo_join_id"
+            )
+            execute_batch(cur, sql, unique_geo, page_size=batch_size)
+
+        # 4. LOAD MEASUREMENTS (Facts)
+        # ---------------------------------------------------------
+        # Prepare the list of dictionaries for the facts table
+        measurements_data = []
+        for r in valid_records:
+            measurements_data.append(
+                {
+                    "unique_id": r.get("Unique ID"),
+                    "indicator_id": r.get("Indicator ID"),
+                    "geo_join_id": r.get("Geo Join ID"),
+                    "time_period": r.get("Time Period"),
+                    "start_date": r.get("Start_Date"),
+                    "data_value": r.get("Data Value"),
+                    "source_file": source_file,
+                }
+            )
+
+        if measurements_data:
+            # Note: unique_id is likely the PK, so we might need conflict handling here too
+            # depending on if you are reloading the same file.
+            sql = build_insert_sql(
+                measurements_table, MEASUREMENTS_COLS, conflict_target="unique_id"
+            )
+            execute_batch(cur, sql, measurements_data, page_size=batch_size)
+
+        # 5. LOAD REJECTS
+        # ---------------------------------------------------------
         reject_rows = []
         for r in rejected_records:
             sanitized = sanitize_for_json(r)
-            error_reason = sanitized.get("error_reason", "Validation failed")
+            # Remove error_reason from the raw dump to keep it clean, if desired
+            error_reason = sanitized.pop("error_reason", "Unknown validation error")
+
             reject_rows.append(
-                (
-                    json.dumps(sanitized, allow_nan=False),
-                    error_reason,
-                    source_file,
-                )
+                {
+                    "run_id": run_id,
+                    "raw_record": json.dumps(
+                        sanitized, default=str
+                    ),  # default=str handles dates
+                    "error_reason": error_reason,
+                    "source_file": source_file,
+                }
             )
 
         if reject_rows:
-            execute_batch(cur, insert_reject_sql, reject_rows, page_size=batch_size)
+            sql = build_insert_sql(ingestion_reject_table, INGESTION_REJECTS_COLS)
+            execute_batch(cur, sql, reject_rows, page_size=batch_size)
 
         conn.commit()
+        print("Batch load committed successfully.")
 
-    except Exception:
+    except Exception as e:
         conn.rollback()
+        print(f"Error during loading: {e}")
         raise
 
     finally:

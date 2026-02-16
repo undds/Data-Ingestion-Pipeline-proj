@@ -32,3 +32,58 @@
 2026-02-09 07:44:51,250 - INFO - Rejected records: 0
 2026-02-09 07:44:51,267 - INFO - Records after deduplication: 18862
 2026-02-09 07:44:59,963 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-09 09:48:58,998 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 09:49:24,786 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 09:49:25,800 - INFO - Database tables verified/created successfully
+2026-02-09 09:49:25,906 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 09:49:25,907 - INFO - Records read: 18862
+2026-02-09 09:49:28,663 - INFO - Valid records: 18862
+2026-02-09 09:49:28,663 - INFO - Rejected records: 0
+2026-02-09 09:49:28,680 - INFO - Records after deduplication: 18862
+2026-02-09 09:49:37,761 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-09 09:49:58,092 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 09:49:59,068 - INFO - Database tables verified/created successfully
+2026-02-09 09:49:59,162 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 09:49:59,162 - INFO - Records read: 18862
+2026-02-09 09:50:01,914 - INFO - Valid records: 18862
+2026-02-09 09:50:01,914 - INFO - Rejected records: 0
+2026-02-09 09:50:01,932 - INFO - Records after deduplication: 18862
+2026-02-09 09:50:10,763 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-09 10:58:01,526 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 10:58:08,639 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 10:58:09,599 - INFO - Database tables verified/created successfully
+2026-02-09 10:58:09,696 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-09 10:58:09,696 - INFO - Records read: 18862
+2026-02-09 10:58:12,421 - INFO - Valid records: 18862
+2026-02-09 10:58:12,421 - INFO - Rejected records: 0
+2026-02-09 10:58:12,439 - INFO - Records after deduplication: 18862
+2026-02-09 10:59:48,888 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 10:59:49,867 - INFO - Database tables verified/created successfully
+2026-02-09 10:59:49,960 - INFO - Read 18862 records from C:\code\revature\Revature-Capstone\data/Air_Quality.csv
+2026-02-09 10:59:49,961 - INFO - Records read: 18862
+2026-02-09 10:59:52,689 - INFO - Valid records: 18862
+2026-02-09 10:59:52,689 - INFO - Rejected records: 0
+2026-02-09 10:59:52,708 - INFO - Records after deduplication: 18862
+2026-02-09 11:12:43,519 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 11:12:50,030 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 11:12:51,001 - INFO - Database tables verified/created successfully
+2026-02-09 11:12:51,082 - INFO - Read 18862 records from C:\code\revature\Revature-Capstone\data/Air_Quality.csv
+2026-02-09 11:12:51,082 - INFO - Records read: 18862
+2026-02-09 11:12:53,804 - INFO - Valid records: 18862
+2026-02-09 11:12:53,804 - INFO - Rejected records: 0
+2026-02-09 11:12:53,822 - INFO - Records after deduplication: 18862
+2026-02-09 11:19:18,721 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 11:19:23,792 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 11:19:24,779 - INFO - Database tables verified/created successfully
+2026-02-09 11:19:24,861 - INFO - Read 18862 records from C:\code\revature\Revature-Capstone\data/Air_Quality.csv
+2026-02-09 11:19:24,861 - INFO - Records read: 18862
+2026-02-09 11:19:27,604 - INFO - Valid records: 18862
+2026-02-09 11:19:27,604 - INFO - Rejected records: 0
+2026-02-09 11:19:27,623 - INFO - Records after deduplication: 18862
+2026-02-09 11:28:50,437 - INFO - Starting Air Quality Data Ingestion
+2026-02-09 11:28:51,411 - INFO - Database tables verified/created successfully
+2026-02-09 11:28:51,509 - INFO - Read 18862 records from C:\code\revature\Revature-Capstone\data/Air_Quality.csv
+2026-02-09 11:28:51,509 - INFO - Records read: 18862
+2026-02-09 11:28:54,228 - INFO - Valid records: 18862
+2026-02-09 11:28:54,228 - INFO - Rejected records: 0
+2026-02-09 11:28:54,246 - INFO - Records after deduplication: 18862

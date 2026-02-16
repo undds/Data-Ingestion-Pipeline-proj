@@ -53,9 +53,58 @@ MEASUREMENTS_COLS = [
     "source_file",
 ]
 
+INSERT_INDICATORS = """
+INSERT INTO indicators (indicator_id, name, measure, measure_info)
+VALUES (%(indicator_id)s, %(name)s, %(measure)s, %(measure_info)s)
+ON CONFLICT (indicator_id) DO NOTHING;
+"""
+
+INSERT_GEOGRAPHIC = """
+INSERT INTO geographic (geo_join_id, geo_type_name, geo_place_name)
+VALUES (%(geo_join_id)s, %(geo_type_name)s, %(geo_place_name)s)
+ON CONFLICT (geo_join_id) DO NOTHING;
+"""
+
+# Return 1 only when an insert actually happens (duplicates return 0 rows)
+INSERT_MEASUREMENTS = """
+INSERT INTO measurements (
+    unique_id,
+    indicator_id,
+    geo_join_id,
+    time_period,
+    start_date,
+    data_value,
+    message,
+    run_id
+)
+VALUES (
+    %(unique_id)s,
+    %(indicator_id)s,
+    %(geo_join_id)s,
+    %(time_period)s,
+    %(start_date)s,
+    %(data_value)s,
+    %(message)s,
+    %(run_id)s
+)
+ON CONFLICT (unique_id) DO NOTHING
+RETURNING 1;
+"""
+
+
+INSERT_REJECT = """
+INSERT INTO ingestion_rejects (run_id, raw_record, error_reason, source_file)
+VALUES (%s, %s, %s, %s)
+RETURNING 1;
+"""
+
+
+# -----------------------
+# Helpers
+# -----------------------
 
 def sanitize_for_json(value: Any) -> Any:
-    """Convert NaN values to None for JSON compatibility."""
+    """Convert NaN to None so json.dumps(allow_nan=False) won't crash."""
     if isinstance(value, float) and math.isnan(value):
         return None
     if isinstance(value, dict):
@@ -107,6 +156,22 @@ def extract_dimension_data(
 
     return unique_rows
 
+def map_measurement(record: Dict, run_id: int) -> Dict:
+    return {
+        "unique_id": record.get("unique_id"),
+        "indicator_id": record.get("indicator_id"),
+        "geo_join_id": record.get("geo_join_id"),
+        "time_period": record.get("time_period"),
+        "start_date": record.get("start_date"),
+        "data_value": record.get("data_value"),
+        "message": record.get("message"),
+        "run_id": run_id,
+    }
+
+
+# -----------------------
+# Main loader
+# -----------------------
 
 def load_records(
     valid_records: List[Dict],
@@ -226,6 +291,7 @@ def load_records(
                 }
             )
 
+        rejects_inserted = 0
         if reject_rows:
             sql = build_insert_sql(ingestion_reject_table, INGESTION_REJECTS_COLS)
             execute_batch(cur, sql, reject_rows, page_size=batch_size)
@@ -237,7 +303,6 @@ def load_records(
         conn.rollback()
         print(f"Error during loading: {e}")
         raise
-
     finally:
         cur.close()
         conn.close()

@@ -50,7 +50,6 @@ MEASUREMENTS_COLS = [
     "time_period",
     "start_date",
     "data_value",
-    "source_file",
 ]
 
 INSERT_INDICATORS = """
@@ -217,10 +216,10 @@ def load_records(
         # ---------------------------------------------------------
         # Mapping: DB Column -> Source CSV Header
         indicator_map = {
-            "indicator_id": "Indicator ID",
-            "name": "Name",
-            "measure": "Measure",
-            "measure_info": "Measure Info",
+            "indicator_id": "indicator_id",
+            "name": "name",
+            "measure": "measure",
+            "measure_info": "measure_info",
         }
         unique_indicators = extract_dimension_data(
             valid_records, indicator_map, "indicator_id"
@@ -235,9 +234,9 @@ def load_records(
         # 3. PREPARE & LOAD DIMENSIONS (Geographic)
         # ---------------------------------------------------------
         geo_map = {
-            "geo_join_id": "Geo Join ID",
-            "geo_type_name": "Geo Type Name",
-            "geo_place_name": "Geo Place Name",
+            "geo_join_id": "geo_join_id",
+            "geo_type_name": "geo_type_name",
+            "geo_place_name": "geo_place_name",
         }
         unique_geo = extract_dimension_data(valid_records, geo_map, "geo_join_id")
 
@@ -249,18 +248,20 @@ def load_records(
 
         # 4. LOAD MEASUREMENTS (Facts)
         # ---------------------------------------------------------
-        # Prepare the list of dictionaries for the facts table
+        # 4. LOAD MEASUREMENTS (Facts)
+        # ---------------------------------------------------------
         measurements_data = []
         for r in valid_records:
             measurements_data.append(
                 {
-                    "unique_id": r.get("Unique ID"),
-                    "indicator_id": r.get("Indicator ID"),
-                    "geo_join_id": r.get("Geo Join ID"),
-                    "time_period": r.get("Time Period"),
-                    "start_date": r.get("Start_Date"),
-                    "data_value": r.get("Data Value"),
-                    "source_file": source_file,
+                    "unique_id": r.get("unique_id"),
+                    "indicator_id": r.get("indicator_id"),
+                    "geo_join_id": r.get("geo_join_id"),
+                    "time_period": r.get("time_period"),
+                    "start_date": r.get("start_date"),
+                    "data_value": r.get("data_value"),
+                    "message": r.get("message"),  # Added to match your INSERT statement
+                    "run_id": run_id              # Added to match your INSERT statement
                 }
             )
 

@@ -2,7 +2,7 @@ import logging
 from db.connection import connect_to_db
 from db.schema import CREATE_INGESTION_RUNS, CREATE_INGESTION_REJECTS, CREATE_MEASUREMENTS, CREATE_INDICATORS, CREATE_GEOGRAPHIC
 
-def init_db(reset: bool = False) -> None:
+def init_db(reset: bool = True) -> None:
     """
     Initialize database tables.
 

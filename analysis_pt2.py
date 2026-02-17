@@ -1,3 +1,4 @@
+print("1")
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -21,11 +22,11 @@ def main() -> None:
     setup_logging("INFO")
     logging.info("Starting analysis")
 
-    init_db()
+    init_db(reset=True) 
 
     conn = connect_to_db()
     cur = conn.cursor()
-
+    print("2")
     try:
         # TODO: Add analysis stuff here
         # two feature engineering examples
@@ -35,6 +36,14 @@ def main() -> None:
         # 
         df = pd.read_sql("SELECT * FROM stg_air_quality_ny;", conn)
         logging.info(f"Loaded DataFrame with shape {df.shape}")
+
+
+        # correlate the time with the air quality index
+        df['start_date'] = pd.to_datetime(df['start_date'])
+        df['hour'] = df['start_date'].dt.hour
+        correlation = df['hour'].corr(df['Data Value'])
+        print(f"Correlation between hour and air quality index: {correlation:.2f}")
+        logging.info(f"Correlation between hour and air quality index: {correlation:.2f}")
 
 
 

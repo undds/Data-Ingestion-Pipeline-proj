@@ -87,3 +87,375 @@
 2026-02-09 11:28:54,228 - INFO - Valid records: 18862
 2026-02-09 11:28:54,228 - INFO - Rejected records: 0
 2026-02-09 11:28:54,246 - INFO - Records after deduplication: 18862
+2026-02-17 09:14:38,964 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 09:14:39,628 - INFO - Database tables verified/created successfully
+2026-02-17 09:14:40,175 - INFO - Run started: run_id=3
+2026-02-17 09:14:40,275 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 09:14:40,275 - INFO - Records read: 18862
+2026-02-17 09:14:42,993 - INFO - Valid records: 18862
+2026-02-17 09:14:42,993 - INFO - Rejected records: 0
+2026-02-17 09:14:43,010 - INFO - Records after deduplication: 18862
+2026-02-17 09:14:43,010 - ERROR - Ingestion failed for run_id=3: load_records() got an unexpected keyword argument 'run_id'
+Traceback (most recent call last):
+  File "c:\code\revature\Revature-Capstone\injestion_pt1.py", line 154, in main
+    load_records(
+    ~~~~~~~~~~~~^
+        valid_records=deduped_records,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        batch_size=cfg["database"].get("batch_size", 500),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+TypeError: load_records() got an unexpected keyword argument 'run_id'
+2026-02-17 09:15:22,417 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 09:15:23,029 - INFO - Database tables verified/created successfully
+2026-02-17 09:15:23,548 - INFO - Run started: run_id=4
+2026-02-17 09:15:23,641 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 09:15:23,641 - INFO - Records read: 18862
+2026-02-17 09:15:26,327 - INFO - Valid records: 18862
+2026-02-17 09:15:26,327 - INFO - Rejected records: 0
+2026-02-17 09:15:26,345 - INFO - Records after deduplication: 18862
+2026-02-17 09:15:26,839 - ERROR - Ingestion failed for run_id=4: column "total_records" of relation "ingestion_runs" does not exist
+LINE 3: ...    (source_file, start_timestamp, end_timestamp, total_reco...
+                                                             ^
+Traceback (most recent call last):
+  File "c:\code\revature\Revature-Capstone\injestion_pt1.py", line 154, in main
+    load_records(
+    ~~~~~~~~~~~~^
+        valid_records=deduped_records,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        batch_size=cfg["database"].get("batch_size", 500),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\code\revature\Revature-Capstone\ingestion\loader.py", line 202, in load_records
+    cur.execute(
+    ~~~~~~~~~~~^
+        run_insert_sql,
+        ^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        ),
+        ^^
+    )
+    ^
+psycopg2.errors.UndefinedColumn: column "total_records" of relation "ingestion_runs" does not exist
+LINE 3: ...    (source_file, start_timestamp, end_timestamp, total_reco...
+                                                             ^
+
+2026-02-17 09:35:24,691 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 09:35:38,201 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 09:35:38,795 - INFO - Database tables verified/created successfully
+2026-02-17 09:35:39,282 - INFO - Run started: run_id=5
+2026-02-17 09:35:39,362 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 09:35:39,363 - INFO - Records read: 18862
+2026-02-17 09:35:42,448 - INFO - Valid records: 18862
+2026-02-17 09:35:42,448 - INFO - Rejected records: 0
+2026-02-17 09:35:42,467 - INFO - Records after deduplication: 18862
+2026-02-17 09:35:42,916 - ERROR - Ingestion failed for run_id=5: column "total_records" of relation "ingestion_runs" does not exist
+LINE 3: ...    (source_file, start_timestamp, end_timestamp, total_reco...
+                                                             ^
+Traceback (most recent call last):
+  File "c:\code\revature\Revature-Capstone\injestion_pt1.py", line 154, in main
+    load_records(
+    ~~~~~~~~~~~~^
+        valid_records=deduped_records,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        batch_size=cfg["database"].get("batch_size", 500),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\code\revature\Revature-Capstone\ingestion\loader.py", line 202, in load_records
+    cur.execute(
+    ~~~~~~~~~~~^
+        run_insert_sql,
+        ^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        ),
+        ^^
+    )
+    ^
+psycopg2.errors.UndefinedColumn: column "total_records" of relation "ingestion_runs" does not exist
+LINE 3: ...    (source_file, start_timestamp, end_timestamp, total_reco...
+                                                             ^
+
+2026-02-17 09:36:04,866 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 09:36:05,823 - INFO - Database tables verified/created successfully
+2026-02-17 09:36:06,329 - INFO - Run started: run_id=1
+2026-02-17 09:36:06,422 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 09:36:06,423 - INFO - Records read: 18862
+2026-02-17 09:36:09,216 - INFO - Valid records: 18862
+2026-02-17 09:36:09,216 - INFO - Rejected records: 0
+2026-02-17 09:36:09,233 - INFO - Records after deduplication: 18862
+2026-02-17 09:36:09,809 - ERROR - Ingestion failed for run_id=1: column "source_file" of relation "measurements" does not exist
+LINE 1: ...geo_join_id, time_period, start_date, data_value, source_fil...
+                                                             ^
+Traceback (most recent call last):
+  File "c:\code\revature\Revature-Capstone\injestion_pt1.py", line 154, in main
+    load_records(
+    ~~~~~~~~~~~~^
+        valid_records=deduped_records,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        batch_size=cfg["database"].get("batch_size", 500),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\code\revature\Revature-Capstone\ingestion\loader.py", line 273, in load_records
+    execute_batch(cur, sql, measurements_data, page_size=batch_size)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\iceyf\AppData\Roaming\Python\Python314\site-packages\psycopg2\extras.py", line 1216, in execute_batch
+    cur.execute(b";".join(sqls))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column "source_file" of relation "measurements" does not exist
+LINE 1: ...geo_join_id, time_period, start_date, data_value, source_fil...
+                                                             ^
+
+2026-02-17 09:39:13,372 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 09:39:14,281 - INFO - Database tables verified/created successfully
+2026-02-17 09:39:14,792 - INFO - Run started: run_id=1
+2026-02-17 09:39:14,885 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 09:39:14,885 - INFO - Records read: 18862
+2026-02-17 09:39:17,631 - INFO - Valid records: 18862
+2026-02-17 09:39:17,631 - INFO - Rejected records: 0
+2026-02-17 09:39:17,649 - INFO - Records after deduplication: 18862
+2026-02-17 09:39:18,199 - ERROR - Ingestion failed for run_id=1: column "source_file" of relation "measurements" does not exist
+LINE 1: ...geo_join_id, time_period, start_date, data_value, source_fil...
+                                                             ^
+Traceback (most recent call last):
+  File "c:\code\revature\Revature-Capstone\injestion_pt1.py", line 154, in main
+    load_records(
+    ~~~~~~~~~~~~^
+        valid_records=deduped_records,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        batch_size=cfg["database"].get("batch_size", 500),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\code\revature\Revature-Capstone\ingestion\loader.py", line 273, in load_records
+    execute_batch(cur, sql, measurements_data, page_size=batch_size)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\iceyf\AppData\Roaming\Python\Python314\site-packages\psycopg2\extras.py", line 1216, in execute_batch
+    cur.execute(b";".join(sqls))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column "source_file" of relation "measurements" does not exist
+LINE 1: ...geo_join_id, time_period, start_date, data_value, source_fil...
+                                                             ^
+
+2026-02-17 09:40:29,346 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 09:40:30,264 - INFO - Database tables verified/created successfully
+2026-02-17 09:40:30,764 - INFO - Run started: run_id=1
+2026-02-17 09:40:30,857 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 09:40:30,858 - INFO - Records read: 18862
+2026-02-17 09:40:33,744 - INFO - Valid records: 18862
+2026-02-17 09:40:33,744 - INFO - Rejected records: 0
+2026-02-17 09:40:33,764 - INFO - Records after deduplication: 18862
+2026-02-17 09:40:34,318 - ERROR - Ingestion failed for run_id=1: column "source_file" of relation "measurements" does not exist
+LINE 1: ...geo_join_id, time_period, start_date, data_value, source_fil...
+                                                             ^
+Traceback (most recent call last):
+  File "c:\code\revature\Revature-Capstone\injestion_pt1.py", line 154, in main
+    load_records(
+    ~~~~~~~~~~~~^
+        valid_records=deduped_records,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        batch_size=cfg["database"].get("batch_size", 500),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\code\revature\Revature-Capstone\ingestion\loader.py", line 273, in load_records
+    execute_batch(cur, sql, measurements_data, page_size=batch_size)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\iceyf\AppData\Roaming\Python\Python314\site-packages\psycopg2\extras.py", line 1216, in execute_batch
+    cur.execute(b";".join(sqls))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column "source_file" of relation "measurements" does not exist
+LINE 1: ...geo_join_id, time_period, start_date, data_value, source_fil...
+                                                             ^
+
+2026-02-17 09:42:00,457 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 09:42:01,393 - INFO - Database tables verified/created successfully
+2026-02-17 09:42:01,870 - INFO - Run started: run_id=1
+2026-02-17 09:42:01,963 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 09:42:01,964 - INFO - Records read: 18862
+2026-02-17 09:42:04,826 - INFO - Valid records: 18862
+2026-02-17 09:42:04,827 - INFO - Rejected records: 0
+2026-02-17 09:42:04,845 - INFO - Records after deduplication: 18862
+2026-02-17 09:42:05,391 - ERROR - Ingestion failed for run_id=1: column "source_file" of relation "measurements" does not exist
+LINE 1: ...geo_join_id, time_period, start_date, data_value, source_fil...
+                                                             ^
+Traceback (most recent call last):
+  File "c:\code\revature\Revature-Capstone\injestion_pt1.py", line 151, in main
+    load_records(
+    ~~~~~~~~~~~~^
+        valid_records=deduped_records,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        batch_size=cfg["database"].get("batch_size", 500),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\code\revature\Revature-Capstone\ingestion\loader.py", line 273, in load_records
+    execute_batch(cur, sql, measurements_data, page_size=batch_size)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\iceyf\AppData\Roaming\Python\Python314\site-packages\psycopg2\extras.py", line 1216, in execute_batch
+    cur.execute(b";".join(sqls))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column "source_file" of relation "measurements" does not exist
+LINE 1: ...geo_join_id, time_period, start_date, data_value, source_fil...
+                                                             ^
+
+2026-02-17 09:42:57,896 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 09:42:58,811 - INFO - Database tables verified/created successfully
+2026-02-17 09:42:59,305 - INFO - Run started: run_id=1
+2026-02-17 09:42:59,400 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 09:42:59,400 - INFO - Records read: 18862
+2026-02-17 09:43:02,235 - INFO - Valid records: 18862
+2026-02-17 09:43:02,235 - INFO - Rejected records: 0
+2026-02-17 09:43:02,254 - INFO - Records after deduplication: 18862
+2026-02-17 09:43:02,801 - ERROR - Ingestion failed for run_id=1: column "source_file" of relation "measurements" does not exist
+LINE 1: ...geo_join_id, time_period, start_date, data_value, source_fil...
+                                                             ^
+Traceback (most recent call last):
+  File "c:\code\revature\Revature-Capstone\injestion_pt1.py", line 151, in main
+    load_records(
+    ~~~~~~~~~~~~^
+        valid_records=deduped_records,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        batch_size=cfg["database"].get("batch_size", 500),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\code\revature\Revature-Capstone\ingestion\loader.py", line 273, in load_records
+    execute_batch(cur, sql, measurements_data, page_size=batch_size)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\iceyf\AppData\Roaming\Python\Python314\site-packages\psycopg2\extras.py", line 1216, in execute_batch
+    cur.execute(b";".join(sqls))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column "source_file" of relation "measurements" does not exist
+LINE 1: ...geo_join_id, time_period, start_date, data_value, source_fil...
+                                                             ^
+
+2026-02-17 09:45:20,706 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 09:45:21,619 - INFO - Database tables verified/created successfully
+2026-02-17 09:45:22,103 - INFO - Run started: run_id=1
+2026-02-17 09:45:22,200 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 09:45:22,201 - INFO - Records read: 18862
+2026-02-17 09:45:24,955 - INFO - Valid records: 18862
+2026-02-17 09:45:24,955 - INFO - Rejected records: 0
+2026-02-17 09:45:24,972 - INFO - Records after deduplication: 18862
+2026-02-17 09:45:25,587 - ERROR - Ingestion failed for run_id=1: null value in column "unique_id" of relation "measurements" violates not-null constraint
+DETAIL:  Failing row contains (null, null, null, null, null, null, null, null, 2026-02-17 14:45:24.973354).
+Traceback (most recent call last):
+  File "c:\code\revature\Revature-Capstone\injestion_pt1.py", line 151, in main
+    load_records(
+    ~~~~~~~~~~~~^
+        valid_records=deduped_records,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        batch_size=cfg["database"].get("batch_size", 500),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\code\revature\Revature-Capstone\ingestion\loader.py", line 272, in load_records
+    execute_batch(cur, sql, measurements_data, page_size=batch_size)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\iceyf\AppData\Roaming\Python\Python314\site-packages\psycopg2\extras.py", line 1216, in execute_batch
+    cur.execute(b";".join(sqls))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+psycopg2.errors.NotNullViolation: null value in column "unique_id" of relation "measurements" violates not-null constraint
+DETAIL:  Failing row contains (null, null, null, null, null, null, null, null, 2026-02-17 14:45:24.973354).
+
+2026-02-17 09:53:15,919 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 09:53:22,633 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 09:53:23,534 - INFO - Database tables verified/created successfully
+2026-02-17 09:53:24,031 - INFO - Run started: run_id=1, source_file=Air_Quality.csv
+2026-02-17 09:53:24,112 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 09:53:24,113 - INFO - Records read: 18862
+2026-02-17 09:53:26,904 - INFO - Valid records: 18862
+2026-02-17 09:53:26,904 - INFO - Rejected records: 0
+2026-02-17 09:53:27,457 - ERROR - Ingestion failed for run_id=1: null value in column "unique_id" of relation "measurements" violates not-null constraint
+DETAIL:  Failing row contains (null, null, null, null, null, null, null, null, 2026-02-17 14:53:26.818079).
+Traceback (most recent call last):
+  File "c:\code\revature\Revature-Capstone\injestion_pt1.py", line 142, in main
+    load_records(
+    ~~~~~~~~~~~~^
+        valid_records=valid_records,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        batch_size=cfg["database"].get("batch_size", 500),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\code\revature\Revature-Capstone\ingestion\loader.py", line 271, in load_records
+    execute_batch(cur, sql, measurements_data, page_size=batch_size)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\iceyf\AppData\Roaming\Python\Python314\site-packages\psycopg2\extras.py", line 1216, in execute_batch
+    cur.execute(b";".join(sqls))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+psycopg2.errors.NotNullViolation: null value in column "unique_id" of relation "measurements" violates not-null constraint
+DETAIL:  Failing row contains (null, null, null, null, null, null, null, null, 2026-02-17 14:53:26.818079).
+
+2026-02-17 09:56:27,094 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 09:56:28,017 - INFO - Database tables verified/created successfully
+2026-02-17 09:56:28,509 - INFO - Run started: run_id=1, source_file=Air_Quality.csv
+2026-02-17 09:56:28,604 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 09:56:28,605 - INFO - Records read: 18862
+2026-02-17 09:56:31,396 - INFO - Valid records: 18862
+2026-02-17 09:56:31,396 - INFO - Rejected records: 0
+2026-02-17 09:56:31,942 - ERROR - Ingestion failed for run_id=1: null value in column "unique_id" of relation "measurements" violates not-null constraint
+DETAIL:  Failing row contains (null, null, null, null, null, null, null, null, 2026-02-17 14:56:31.303816).
+Traceback (most recent call last):
+  File "c:\code\revature\Revature-Capstone\injestion_pt1.py", line 143, in main
+    load_records(
+    ~~~~~~~~~~~~^
+        valid_records=valid_records,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        batch_size=cfg["database"].get("batch_size", 500),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\code\revature\Revature-Capstone\ingestion\loader.py", line 271, in load_records
+    execute_batch(cur, sql, measurements_data, page_size=batch_size)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\iceyf\AppData\Roaming\Python\Python314\site-packages\psycopg2\extras.py", line 1216, in execute_batch
+    cur.execute(b";".join(sqls))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+psycopg2.errors.NotNullViolation: null value in column "unique_id" of relation "measurements" violates not-null constraint
+DETAIL:  Failing row contains (null, null, null, null, null, null, null, null, 2026-02-17 14:56:31.303816).
+
+2026-02-17 10:04:03,262 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 10:04:09,628 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 10:04:10,577 - INFO - Database tables verified/created successfully
+2026-02-17 10:04:11,095 - INFO - Run started: run_id=1, source_file=Air_Quality.csv
+2026-02-17 10:04:11,182 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 10:04:11,182 - INFO - Records read: 18862
+2026-02-17 10:04:14,048 - INFO - Valid records: 18862
+2026-02-17 10:04:14,048 - INFO - Rejected records: 0
+2026-02-17 10:04:19,744 - ERROR - Ingestion failed for run_id=1: finish_run() missing 1 required positional argument: 'total_records'
+Traceback (most recent call last):
+  File "c:\code\revature\Revature-Capstone\injestion_pt1.py", line 150, in main
+    finish_run(
+    ~~~~~~~~~~^
+        run_id=run_id,
+        ^^^^^^^^^^^^^^
+    ...<3 lines>...
+        error_message=None,
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+TypeError: finish_run() missing 1 required positional argument: 'total_records'
+2026-02-17 10:05:16,838 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 10:05:17,795 - INFO - Database tables verified/created successfully
+2026-02-17 10:05:18,309 - INFO - Run started: run_id=1, source_file=Air_Quality.csv
+2026-02-17 10:05:18,390 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 10:05:18,390 - INFO - Records read: 18862
+2026-02-17 10:05:21,207 - INFO - Valid records: 18862
+2026-02-17 10:05:21,207 - INFO - Rejected records: 0
+2026-02-17 10:05:27,206 - INFO - Air Quality Data Ingestion completed successfully

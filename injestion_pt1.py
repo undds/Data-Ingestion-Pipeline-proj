@@ -7,7 +7,6 @@ from db.init_db import init_db
 from db.connection import connect_to_db
 from ingestion.read import read_csv
 from ingestion.validate import validate_records
-from ingestion.deduplicator import deduplicate_records
 from ingestion.loader import load_records
 
 
@@ -61,10 +60,9 @@ def start_run(source_file: str) -> int:
 
 def finish_run(
     run_id: int,
-    records_ingested: int,
-    records_approved: int,
-    records_rejected: int,
-    records_deduped: int,
+    total_records: int,
+    valid_records: int,
+    rejected_records: int,
     status: str = "SUCCESS",
     error_message: str | None = None,
 ) -> None:
@@ -75,19 +73,17 @@ def finish_run(
             """
             UPDATE ingestion_runs
             SET end_timestamp = CURRENT_TIMESTAMP,
-                records_ingested = %s,
-                records_approved = %s,
-                records_rejected = %s,
-                records_deduped = %s,
+                total_records = %s,
+                valid_records = %s,
+                rejected_records = %s,
                 status = %s,
                 error_message = %s
             WHERE run_id = %s;
             """,
             (
-                records_ingested,
-                records_approved,
-                records_rejected,
-                records_deduped,
+                total_records,
+                valid_records,
+                rejected_records,
                 status,
                 error_message,
                 run_id,
@@ -105,14 +101,14 @@ def main() -> None:
     logging.info("Starting Air Quality Data Ingestion")
 
     # Create tables
-    init_db(reset=False)
+    init_db(reset=True)
 
     src_path = cfg["data_source"]["path"]
     source_file = os.path.basename(src_path)
 
     # Start run tracking
     run_id = start_run(source_file)
-    logging.info(f"Run started: run_id={run_id}")
+    logging.info(f"Run started: run_id={run_id}, source_file={source_file}")
 
     try:
         raw_records = read_csv(src_path)
@@ -141,30 +137,21 @@ def main() -> None:
         logging.info(f"Rejected records: {len(rejected_records)}")
         log_reject_summary(rejected_records, sample_size=5)
 
-        dedup_cfg = cfg.get("deduplication", {})
-        if dedup_cfg.get("enabled", True):
-            dedup_keys = dedup_cfg.get("keys", [])
-            deduped_records = deduplicate_records(valid_records, dedup_keys)
-        else:
-            deduped_records = valid_records
-
-        logging.info(f"Records after deduplication: {len(deduped_records)}")
+        valid_records = [r for r in valid_records if r.get("unique_id") is not None]
 
         # Load (normalized schema)
         load_records(
-            valid_records=deduped_records,
+            valid_records=valid_records,
             rejected_records=rejected_records,
             source_file=source_file,
-            run_id=run_id,
             batch_size=cfg["database"].get("batch_size", 500),
         )
 
         finish_run(
             run_id=run_id,
-            records_ingested=len(raw_records),
-            records_approved=len(valid_records),
-            records_rejected=len(rejected_records),
-            records_deduped=len(deduped_records),
+            total_records=len(valid_records) + len(rejected_records),
+            valid_records=len(valid_records),
+            rejected_records=len(rejected_records),
             status="SUCCESS",
             error_message=None,
         )
@@ -175,10 +162,9 @@ def main() -> None:
         logging.exception(f"Ingestion failed for run_id={run_id}: {e}")
         finish_run(
             run_id=run_id,
-            records_ingested=0,
-            records_approved=0,
-            records_rejected=0,
-            records_deduped=0,
+            valid_records=0,
+            rejected_records=len(rejected_records),
+            total_records=len(raw_records),
             status="FAILED",
             error_message=str(e),
         )

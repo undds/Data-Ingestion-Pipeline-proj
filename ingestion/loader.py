@@ -260,8 +260,8 @@ def load_records(
                     "time_period": r.get("time_period"),
                     "start_date": r.get("start_date"),
                     "data_value": r.get("data_value"),
-                    "message": r.get("message"),  # Added to match your INSERT statement
-                    "run_id": run_id              # Added to match your INSERT statement
+                    "message": r.get("message"),  
+                    "run_id": run_id              
                 }
             )
 

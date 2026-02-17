@@ -15,6 +15,7 @@ def connect_to_db():
             database="postgres",
             user="postgres",
             password=DB_PASSWORD,
+            options="-c lock_timeout=5000",
         )
         return conn
     except Exception as e:

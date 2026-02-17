@@ -459,3 +459,19 @@ TypeError: finish_run() missing 1 required positional argument: 'total_records'
 2026-02-17 10:05:21,207 - INFO - Valid records: 18862
 2026-02-17 10:05:21,207 - INFO - Rejected records: 0
 2026-02-17 10:05:27,206 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-17 10:16:25,172 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 10:16:26,083 - INFO - Database tables verified/created successfully
+2026-02-17 10:16:26,581 - INFO - Run started: run_id=1, source_file=Air_Quality.csv
+2026-02-17 10:16:26,676 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 10:16:26,676 - INFO - Records read: 18862
+2026-02-17 10:16:29,555 - INFO - Valid records: 18862
+2026-02-17 10:16:29,555 - INFO - Rejected records: 0
+2026-02-17 10:16:35,438 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-17 14:43:49,963 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 14:43:50,887 - INFO - Database tables verified/created successfully
+2026-02-17 14:43:51,395 - INFO - Run started: run_id=1, source_file=Air_Quality.csv
+2026-02-17 14:43:51,478 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 14:43:51,478 - INFO - Records read: 18862
+2026-02-17 14:43:54,339 - INFO - Valid records: 18862
+2026-02-17 14:43:54,339 - INFO - Rejected records: 0
+2026-02-17 14:44:00,221 - INFO - Air Quality Data Ingestion completed successfully

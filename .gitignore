@@ -3,4 +3,4 @@ __pycache__
 logs/
 *.log
 /logs
-ingestion.log
+logs/ingestion.log

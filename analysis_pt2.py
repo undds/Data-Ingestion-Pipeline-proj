@@ -1,4 +1,3 @@
-print("1")
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -34,19 +33,12 @@ def setup_logging(log_level: str = "INFO") -> None:
 def main() -> None:
     setup_logging("INFO")
     logging.info("Starting analysis")
-    print("1.5")
     init_db(reset=False) 
-    print("2")
     conn = connect_to_db()
     cur = conn.cursor()
-    print("3")
     try:
-        # TODO: Add analysis stuff here
-        # two feature engineering examples
-        # one correlation
-        # three visualizations
+        # TODO: two feature engineering examples //  two more visualizations
 
-        #
         df = pd.read_sql("SELECT * FROM measurements;", conn)
         geo_df = pd.read_sql("SELECT geo_join_id, geo_place_name FROM geographic;", conn)
         df = pd.read_sql("""
@@ -84,8 +76,7 @@ ON m.geo_join_id = g.geo_join_id;
         season_corr = df['season_idx'].corr(df['data_value'])
         print(f"Correlation between Season and Air Quality: {season_corr:.2f}")
 
-        # Visualization (Box Plot is best for categorical correlation)
-
+        # Visualization
         plt.figure(figsize=(10, 6))
         sns.boxplot(x='season_idx', y='data_value', data=df)
         plt.xticks([0, 1], ['Winter', 'Summer'])
@@ -94,6 +85,27 @@ ON m.geo_join_id = g.geo_join_id;
         plt.ylabel('Air Quality Value (PM 2.5)')
         plt.savefig('logs/seasonal_correlation.png')
         plt.show()
+
+        # FEATURE ENGINEERING: ONE-HOT ENCODING
+        # converts categorical variables, in this case the indicator name (PM2.5, Ozone, NOx, etc.) into a format that can be provided to ML algorithms to do a better job in prediction.
+
+        # join our measurements table with the indicators table
+        query = """
+            SELECT 
+                m.*, 
+                i.name 
+            FROM measurements m
+            JOIN indicators i ON m.indicator_id = i.indicator_id;
+        """
+
+        # read joined data into a df and one-hot encode the indicator name
+        df = pd.read_sql(query, conn)
+        df_encoded = pd.get_dummies(df, columns=["name"], drop_first=True, dtype=int)
+        df_encoded.to_csv("logs/encoded_measurements.csv", index=False)
+
+        print("Data successfully exported to encoded_measurements.csv")
+
+
 
         # plot avg pollution plot
         top_n = 10

@@ -1,7 +1,11 @@
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
+import logging
+
+from db.init_db import init_db
+from db.connection import connect_to_db
 
 from warnings import filterwarnings
 
@@ -12,13 +16,6 @@ filterwarnings(
     category=UserWarning,
     message=".*pandas only supports SQLAlchemy connectable.*",
 )
-
-import os
-import logging
-
-from db.init_db import init_db
-from db.connection import connect_to_db
-
 
 def get_season(month):
     if month in [12, 1, 2]:

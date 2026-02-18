@@ -4,3 +4,14 @@ psycopg2-binary
 python-dotenv
 pytest
 pyyaml
+matplotlib
+seaborn
+warnings
+collections
+os
+logging
+json
+math
+typing
+datetime
+dotenv

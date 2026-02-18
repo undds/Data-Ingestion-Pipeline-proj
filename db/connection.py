@@ -1,5 +1,4 @@
 import psycopg2
-import boto3
 import os
 from dotenv import load_dotenv
 

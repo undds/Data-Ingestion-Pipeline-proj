@@ -84,7 +84,18 @@ def main() -> None:
 
         print("Data successfully exported to encoded_measurements.csv")
 
+        # FEATURE ENGINEERING: FEATURE SPLITTING
+        # split the start_date column into three separate columns: year, month, and day.
+        df = pd.read_sql("SELECT * FROM measurements;", conn)
+        df["start_date"] = pd.to_datetime(df["start_date"])
+        df["year"] = df["start_date"].dt.year
+        df["month"] = df["start_date"].dt.month
+        df["day"] = df["start_date"].dt.day
+        df.to_csv("logs/split_measurements.csv", index=False)
+        print("Data successfully exported to split_measurements.csv")
 
+
+        
 
     except Exception as e:
         conn.rollback()

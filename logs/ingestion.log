@@ -475,3 +475,33 @@ TypeError: finish_run() missing 1 required positional argument: 'total_records'
 2026-02-17 14:43:54,339 - INFO - Valid records: 18862
 2026-02-17 14:43:54,339 - INFO - Rejected records: 0
 2026-02-17 14:44:00,221 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-17 16:20:29,857 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 16:20:35,169 - ERROR - Database initialization failed: canceling statement due to lock timeout
+
+2026-02-17 16:31:18,726 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 16:31:19,067 - INFO - Database tables verified/created successfully
+2026-02-17 16:31:19,357 - INFO - Run started: run_id=3, source_file=Air_Quality.csv
+2026-02-17 16:31:19,513 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 16:31:19,513 - INFO - Records read: 18862
+2026-02-17 16:31:25,163 - INFO - Valid records: 18862
+2026-02-17 16:31:25,163 - INFO - Rejected records: 0
+2026-02-17 16:31:28,046 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-17 17:02:22,842 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 17:02:28,237 - ERROR - Database initialization failed: canceling statement due to lock timeout
+
+2026-02-17 20:25:09,354 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 20:25:09,904 - INFO - Database tables verified/created successfully
+2026-02-17 20:25:10,224 - INFO - Run started: run_id=1, source_file=Air_Quality.csv
+2026-02-17 20:25:10,371 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 20:25:10,371 - INFO - Records read: 18862
+2026-02-17 20:25:16,100 - INFO - Valid records: 18862
+2026-02-17 20:25:16,100 - INFO - Rejected records: 0
+2026-02-17 20:25:19,856 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-17 20:27:40,228 - INFO - Starting Air Quality Data Ingestion
+2026-02-17 20:27:40,601 - INFO - Database tables verified/created successfully
+2026-02-17 20:27:40,886 - INFO - Run started: run_id=3, source_file=Air_Quality.csv
+2026-02-17 20:27:41,028 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-17 20:27:41,028 - INFO - Records read: 18862
+2026-02-17 20:27:46,636 - INFO - Valid records: 18862
+2026-02-17 20:27:46,636 - INFO - Rejected records: 0
+2026-02-17 20:27:49,919 - INFO - Air Quality Data Ingestion completed successfully

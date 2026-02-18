@@ -101,7 +101,7 @@ def main() -> None:
     logging.info("Starting Air Quality Data Ingestion")
 
     # Create tables
-    init_db(reset=True)
+    init_db(reset=False)
 
     src_path = cfg["data_source"]["path"]
     source_file = os.path.basename(src_path)

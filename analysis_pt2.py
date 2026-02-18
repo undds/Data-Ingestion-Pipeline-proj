@@ -48,6 +48,19 @@ def main() -> None:
 
         #
         df = pd.read_sql("SELECT * FROM measurements;", conn)
+        geo_df = pd.read_sql("SELECT geo_join_id, geo_place_name FROM geographic;", conn)
+        df = pd.read_sql("""
+SELECT 
+    m.unique_id,
+    m.indicator_id,
+    m.geo_join_id,
+    g.geo_place_name,
+    m.start_date,
+    m.data_value
+FROM measurements m
+LEFT JOIN geographic g
+ON m.geo_join_id = g.geo_join_id;
+""", conn)
         logging.info(f"Loaded DataFrame with shape {df.shape}")
 
         # correlate season with data_value where indicator id = 365 (pm2.5)
@@ -58,7 +71,15 @@ def main() -> None:
 
         # Create a numeric 'season_idx' column for correlation
         df["season_idx"] = df["month"].apply(get_season)
+        #GEO LOCATION
+        df["start_date"] = pd.to_datetime(df["start_date"], errors="coerce")
+        df = df.dropna(subset=["start_date", "data_value", "geo_place_name"])
 
+        df["month"] = df["start_date"].dt.month
+        df["season_idx"] = df["month"].apply(get_season)
+        location_avg = df.groupby("geo_place_name")["data_value"].mean()
+        df["location_avg_pollution"] = df["geo_place_name"].map(location_avg)
+        df["pollution_deviation"] = df["data_value"] - df["location_avg_pollution"]
         # Calculate correlation
         season_corr = df['season_idx'].corr(df['data_value'])
         print(f"Correlation between Season and Air Quality: {season_corr:.2f}")
@@ -72,6 +93,33 @@ def main() -> None:
         plt.xlabel('Season')
         plt.ylabel('Air Quality Value (PM 2.5)')
         plt.savefig('logs/seasonal_correlation.png')
+        plt.show()
+
+        # plot avg pollution plot
+        top_n = 10
+        top_locations = (
+        df.groupby("geo_place_name")["location_avg_pollution"]
+        .mean()
+        .sort_values(ascending=False)
+        .head(10)
+)
+
+        plt.figure(figsize=(10, 6))
+        top_locations.plot(kind="bar")
+        plt.title(f"Top {top_n} Locations by Average Pollution (Baseline)")
+        plt.xlabel("geo_join_id")
+        plt.ylabel("Avg Pollution (data_value)")
+        plt.tight_layout()
+        plt.savefig("logs/top_locations_avg_pollution.png")
+        plt.show()
+
+        #plot deviation 
+        plt.figure(figsize=(10,6))
+        sns.histplot(df["pollution_deviation"], bins=50, kde=True)
+        plt.title("Pollution Deviation From Location Baseline")
+        plt.xlabel("Deviation Value")
+        plt.ylabel("Frequency")
+        plt.savefig("logs/pollution_deviation.png")
         plt.show()
 
     except Exception as e:

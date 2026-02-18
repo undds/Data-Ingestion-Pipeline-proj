@@ -141,6 +141,7 @@ def main() -> None:
 
         # Load (normalized schema)
         load_records(
+            run_id=run_id,
             valid_records=valid_records,
             rejected_records=rejected_records,
             source_file=source_file,

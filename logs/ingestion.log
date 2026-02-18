@@ -505,3 +505,60 @@ TypeError: finish_run() missing 1 required positional argument: 'total_records'
 2026-02-17 20:27:46,636 - INFO - Valid records: 18862
 2026-02-17 20:27:46,636 - INFO - Rejected records: 0
 2026-02-17 20:27:49,919 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-18 14:13:04,394 - INFO - Starting Air Quality Data Ingestion
+2026-02-18 14:13:18,415 - INFO - Starting Air Quality Data Ingestion
+2026-02-18 14:13:18,738 - INFO - Database tables verified/created successfully
+2026-02-18 14:13:19,000 - INFO - Run started: run_id=5, source_file=Air_Quality.csv
+2026-02-18 14:13:19,151 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-18 14:13:19,151 - INFO - Records read: 18862
+2026-02-18 14:13:25,248 - INFO - Valid records: 18862
+2026-02-18 14:13:25,248 - INFO - Rejected records: 0
+2026-02-18 14:13:27,858 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-18 14:20:38,554 - INFO - Starting Air Quality Data Ingestion
+2026-02-18 14:20:38,871 - INFO - Database tables verified/created successfully
+2026-02-18 14:20:39,133 - INFO - Run started: run_id=7, source_file=Air_Quality.csv
+2026-02-18 14:20:39,268 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-18 14:20:39,269 - INFO - Records read: 18862
+2026-02-18 14:20:44,797 - INFO - Valid records: 18862
+2026-02-18 14:20:44,798 - INFO - Rejected records: 0
+2026-02-18 14:20:47,742 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-18 14:22:10,585 - INFO - Starting Air Quality Data Ingestion
+2026-02-18 14:22:10,909 - INFO - Database tables verified/created successfully
+2026-02-18 14:22:11,199 - INFO - Run started: run_id=9, source_file=Air_Quality.csv
+2026-02-18 14:22:11,333 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-18 14:22:11,333 - INFO - Records read: 18862
+2026-02-18 14:22:16,995 - INFO - Valid records: 18862
+2026-02-18 14:22:16,995 - INFO - Rejected records: 0
+2026-02-18 14:22:19,784 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-18 14:29:19,581 - INFO - Starting Air Quality Data Ingestion
+2026-02-18 14:29:19,880 - INFO - Database tables verified/created successfully
+2026-02-18 14:29:20,122 - INFO - Run started: run_id=11, source_file=Air_Quality.csv
+2026-02-18 14:29:20,261 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-18 14:29:20,261 - INFO - Records read: 18862
+2026-02-18 14:29:25,794 - INFO - Valid records: 18862
+2026-02-18 14:29:25,794 - INFO - Rejected records: 0
+2026-02-18 14:29:28,496 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-18 14:30:12,655 - INFO - Starting Air Quality Data Ingestion
+2026-02-18 14:30:13,226 - INFO - Database tables verified/created successfully
+2026-02-18 14:30:13,494 - INFO - Run started: run_id=1, source_file=Air_Quality.csv
+2026-02-18 14:30:13,649 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-18 14:30:13,650 - INFO - Records read: 18862
+2026-02-18 14:30:19,199 - INFO - Valid records: 18862
+2026-02-18 14:30:19,200 - INFO - Rejected records: 0
+2026-02-18 14:30:22,499 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-18 14:31:46,575 - INFO - Starting Air Quality Data Ingestion
+2026-02-18 14:31:47,094 - INFO - Database tables verified/created successfully
+2026-02-18 14:31:47,352 - INFO - Run started: run_id=1, source_file=Air_Quality.csv
+2026-02-18 14:31:47,499 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-18 14:31:47,500 - INFO - Records read: 18862
+2026-02-18 14:31:53,157 - INFO - Valid records: 18862
+2026-02-18 14:31:53,157 - INFO - Rejected records: 0
+2026-02-18 14:31:56,468 - INFO - Air Quality Data Ingestion completed successfully
+2026-02-18 14:32:22,097 - INFO - Starting Air Quality Data Ingestion
+2026-02-18 14:32:22,404 - INFO - Database tables verified/created successfully
+2026-02-18 14:32:22,650 - INFO - Run started: run_id=2, source_file=Air_Quality.csv
+2026-02-18 14:32:22,798 - INFO - Read 18862 records from data/Air_Quality.csv
+2026-02-18 14:32:22,798 - INFO - Records read: 18862
+2026-02-18 14:32:28,310 - INFO - Valid records: 18862
+2026-02-18 14:32:28,310 - INFO - Rejected records: 0
+2026-02-18 14:32:31,017 - INFO - Air Quality Data Ingestion completed successfully

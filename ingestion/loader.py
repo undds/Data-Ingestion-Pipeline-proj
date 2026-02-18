@@ -173,6 +173,7 @@ def map_measurement(record: Dict, run_id: int) -> Dict:
 # -----------------------
 
 def load_records(
+    run_id: int,
     valid_records: List[Dict],
     rejected_records: List[Dict],
     source_file: str,
@@ -190,27 +191,6 @@ def load_records(
     try:
         # 1. LOG THE RUN (Get run_id)
         # ---------------------------------------------------------
-        run_insert_sql = f"""
-            INSERT INTO {ingestion_runs_table} 
-            ({', '.join(INGESTION_RUNS_INSERT_COLS)}) 
-            VALUES (%s, %s, %s, %s, %s, %s) 
-            RETURNING run_id;
-        """
-        time_before = datetime.now()
-
-        cur.execute(
-            run_insert_sql,
-            (
-                source_file,
-                time_before,  # start_timestamp
-                datetime.now(),  # end_timestamp
-                len(valid_records) + len(rejected_records),
-                len(valid_records),
-                len(rejected_records),
-            ),
-        )
-        run_id = cur.fetchone()[0]
-        print(f"Run ID generated: {run_id}")
 
         # 2. PREPARE & LOAD DIMENSIONS (Indicators)
         # ---------------------------------------------------------

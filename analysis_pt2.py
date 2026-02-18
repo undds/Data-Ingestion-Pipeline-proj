@@ -3,6 +3,16 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+from warnings import filterwarnings
+
+# Suppress only the specific pandas SQL warning
+# This is to make the terminal output cleaner
+filterwarnings(
+    "ignore",
+    category=UserWarning,
+    message=".*pandas only supports SQLAlchemy connectable.*",
+)
+
 import os
 import logging
 

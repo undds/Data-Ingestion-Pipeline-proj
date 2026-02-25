@@ -1,4 +1,4 @@
-# Revature-Capstone
+# README
 This is a project based around injesting data through CSV files and loading them into an AWS RDS PostgreSQL database hosted on AWS EC2. 
 
 We have used the publicly available dataset "Air Quality" found at https://catalog.data.gov/dataset/air-quality.
